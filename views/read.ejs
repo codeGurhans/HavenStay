@@ -1,0 +1,105 @@
+<% layout("boilerplate") %>
+<% if(new_listing.length > 0) {%>
+  <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert" style="height: 4rem;">
+    <%= new_listing %>
+  </div>
+  <% } %> 
+<body>
+        <div class="card">
+            <div>
+                <h2>Details of <%= specific_listing.title %></h2>
+            </div>
+            <div class="show_cards">
+                <img src="<%= specific_listing.image%>" class="show_card card-img-top" alt="specific_image">
+            </div>    
+            <div class="show_card-body">
+              <p>Owned by <i><%= specific_listing.owner.username %></i></p>
+              <p class="card-title"><i><b>Description</b></i>: <%= specific_listing.description %></p>
+              <p class="card-text"><i><b>Price</b></i>: &#8377;<%= specific_listing.price.toLocaleString("en-IN") %>/night</p>
+              <p class="card-text"><i><b>Location</b></i>: <%= specific_listing.location %></p>
+              <p class="card-text"><i><b>Country</b></i>: <%= specific_listing.country %></p>
+              <div class="edit-delete">
+                <% if(currUser && currUser._id.equals(specific_listing.owner._id)){ %>
+              <form method = "GET" action = "/listings/<%= specific_listing._id %>/edit">
+                <button class = "btn btn-danger">Edit</button>
+              </form>
+              <% } %>
+              <br>
+              <% if(currUser && currUser._id.equals(specific_listing.owner._id)){ %>
+              <form method = "POST" action = "/listings/<%= specific_listing._id %>?_method=DELETE">
+                <button class = "btn btn-danger">Delete</button>
+              </form>
+              <% } %>              
+              <div>
+              <hr>
+              <div class = "review_div">
+                <% if(currUser){ %>
+                <h4>Leave a review</h4>
+                <form action = "/listings/<%= specific_listing._id %>/reviews" method = "POST"
+                  novalidate class = "needs-validation">
+                  <b>Please Rate:)</b>
+                  <br><br>
+                  <fieldset class="starability-slot">
+                    <legend>First rating:</legend>
+                    <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+                    <input type="radio" id="first-rate1" name="rating" value="1" />
+                    <label for="first-rate1" title="Terrible">1 star</label>
+                    <input type="radio" id="first-rate2" name="rating" value="2" />
+                    <label for="first-rate2" title="Not good">2 stars</label>
+                    <input type="radio" id="first-rate3" name="rating" value="3" />
+                    <label for="first-rate3" title="Average">3 stars</label>
+                    <input type="radio" id="first-rate4" name="rating" value="4" />
+                    <label for="first-rate4" title="Very good">4 stars</label>
+                    <input type="radio" id="first-rate5" name="rating" value="5" />
+                    <label for="first-rate5" title="Amazing">5 stars</label>
+                  </fieldset>
+                  <br><br>
+                  <h5>Add a comment</h5>
+                  <textarea name="comment" id="review_area" required class = "form-control"></textarea>
+                  <div class="invalid-feedback">
+                    Please enter the comment
+                  </div>
+                  <br>
+                  <button class = "btn btn-danger">Submit</button>
+                </form>
+                <% } %>
+              </div>
+              <h5>All Comments</h5>
+              <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <ul class="list-group list-group-flush">
+                   <% for(review of specific_listing.reviews){ %>
+                    <h5 class="card-title">@<%= review.author.username %></h5>
+                    <li class="list-group-item"> <%= review.comment %> - <p class="starability-result" data-rating="<%= review.rating %>">
+                      Rated: 3 stars
+                    </p> </li>
+                    <% if(currUser && currUser._id.equals(review.author._id)){ %> 
+                     <form method = "POST" 
+                     action = "/listings/<%= specific_listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                       <button class = "btn btn-danger" >Delete Review</button>
+                     </form>
+                     <% } %>
+                    <% } %>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-6 offset-0">
+                <h4>Where you'll be</h4>
+                <div id="map"></div>
+              </div>
+            </div>
+          </div>
+          <script>
+            let map_token = "<%= process.env.MAP_TOKEN %>";
+            const coordinates = <%- JSON.stringify(specific_listing.geometry.coordinates) %>;
+            mapboxgl.accessToken = map_token;
+              const map = new mapboxgl.Map({
+                  container: 'map', // container ID
+                  center: coordinates, // starting position [lng, lat]. Note that lat must be set between -90 and 90
+                  zoom: 9 // starting zoom
+              });
+              const marker1 = new mapboxgl.Marker()
+        .setLngLat(coordinates)
+        .addTo(map);
+          </script>
+</body>

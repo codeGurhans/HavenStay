@@ -1,0 +1,80 @@
+<% layout("boilerplate") %>
+<body>
+  <% if(new_listing.length > 0) {%>
+  <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert" style="height: 4rem;">
+    <%= new_listing %>
+  </div>
+  <% } %> 
+    <div id="filters">
+      <div class="filter">
+        <i class="fa-solid fa-fire"></i>
+        <p>Trending</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-bed"></i>
+        <p>Rooms</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-city"></i>
+        <p>Iconic cities</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-mountain"></i>
+        <p>Mountains</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-person-swimming"></i>
+        <p>Pools</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-tent"></i>
+        <p>Camping</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-wheat-awn"></i>
+        <p>Farms</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-snowflake"></i>
+        <p>Snow</p>
+      </div>
+
+      <div class=" form-check form-switch form-check-reverse">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse">
+        <label class="form-check-label" for="flexSwitchCheckReverse">Price without tax</label>
+      </div>
+    </div>
+
+    <div class = "cards">      
+        <% for(listing of allListings){ %>
+        <div class="card" style="width: 20rem;">
+            <img src="<%= listing.image %>" class="card-img-top" alt="listing_image">
+            <div class="card-body">
+              <h5 class="card-title"><%= listing.title %></h5>
+              <p class="card-text"><%= listing.description %></p>
+              <p class="card-text"> <b>&#8377;<%= listing.price %></b>/night <i class="tax-info">&nbsp;&nbsp;+18% GST</i></p>
+              <a href="/listings/<%= listing._id %>" class="btn btn-danger">Explore</a>
+            </div>
+          </div>
+          <% } %>
+    </div>   
+
+    <script>
+      let tax_switch = document.getElementById("flexSwitchCheckReverse");
+      tax_switch.addEventListener("click", () => {
+        let tax_info = document.getElementsByClassName("tax-info");
+        for (let info of tax_info) 
+        {
+          if (info.style.display !== "none") 
+          {
+            info.style.display = "none";
+          } 
+          else 
+          {
+            info.style.display = "inline"; // Show "+ 18% GST"
+          }
+        }
+      });
+    </script>
+    
+</body>

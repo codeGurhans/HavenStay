@@ -1,0 +1,43 @@
+<% layout("boilerplate") %>
+<body>
+    <h3>Edit your listing</h3>
+    <form method = "POST" action = "/listings/<%= listing._id %>?_method=PUT" novalidate class = "needs-validation">
+        <div class="edit-elements">
+            <label for="title" class="title form-label">Title</label>
+            <input placeholder="Enter new title(if any)" required value = "<%=listing.title%>" name = "title" class = "form-control">
+            <div class="valid-feedback">Edit title</div>
+        </div>
+        <br>
+        <div class="edit-elements">
+            <label for="description" class="form-label">Description</label>
+            <textarea placeholder="Write new description(if any)" required name = "description" class = "form-control"><%=listing.description%></textarea>
+            <div class="valid-feedback">Edit description</div>
+        </div>
+        <br>
+        <div class="edit-elements">
+            <label for="image" class="form-label">Image URL</label>
+            <input placeholder="Enter new URL(if any)" required value = "<%=listing.image%>" name = "image" class = "form-control">
+            <div class="valid-feedback">Edit image URL</div>
+        </div>
+        <br>
+        <div class="edit-elements">
+            <label for="price" class="form-label">Price</label>
+            <input placeholder="Enter new price(if any)" required value = "<%=listing.price%>" name = "price" class = "form-control">
+            <div class="valid-feedback">Edit price</div>
+        </div>
+        <br>
+        <div class="edit-elements">
+            <label for="location" class="form-label">Location</label>
+            <input placeholder="Enter new location(if any)" required value = "<%=listing.location%>" name = "location" class = "form-control">
+            <div class="valid-feedback">Edit Location</div>
+        </div>
+        <br>
+        <div class="edit-elements">
+            <label for="country" class="form-label">Country</label>
+            <input placeholder="Enter new country(if any)" required value = "<%=listing.country%>" name = "country" class = "form-control">
+            <div class="valid-feedback">Edit Country</div>
+        </div>
+        <br>
+        <button class = "btn btn-danger">Edit</button>
+    </form>
+</body>

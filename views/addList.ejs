@@ -1,0 +1,42 @@
+<% layout("boilerplate") %>
+    <h2>Create a new Listing</h2>
+    <form method = "POST" action = "/listings" novalidate class = "needs-validation">
+        <div class = "form-elements">
+            <label for="title" class="title form-label">Title</label>
+            <input placeholder="Enter the title" name = "title" class = "form-control" required>
+            <div class="invalid-feedback">Add a valid title</div>
+        </div>
+        <br>
+        <div class = "form-elements">
+            <label for="description" class="form-label">Description</label>
+            <textarea placeholder="Write the description" name = "description" class = "form-control" required></textarea>
+            <div class="invalid-feedback">Add a short description</div>
+        </div>
+        <br>
+        <div class = "form-elements">
+            <label for="image" class="form-label">Image URL</label>
+            <input placeholder="Enter image URL" name = "image" class = "form-control">
+            <div class="invalid-feedback">Add a valid URL</div>
+        </div>
+        <br>
+        <div class = "form-elements">
+            <label for="price" class="form-label">Price</label>
+            <input placeholder="Enter the price" name = "price" class = "form-control" required>
+            <div class="invalid-feedback">Add a valid Price</div>
+        </div>
+        <br>
+        <div class = "form-elements">
+            <label for="location" class="form-label">Location</label>
+            <input placeholder="Enter the location" name = "location" class = "form-control" required>
+            <div class="invalid-feedback">Add a valid location</div>
+        </div>
+        <br>
+        <div class = "form-elements">
+            <label for="country" class="form-label">Country</label>
+            <input placeholder="Enter the country" name = "country" class = "form-control" required>
+            <div class="invalid-feedback">Add a valid Country</div>
+        </div>
+        <br>
+        <button class = "btn btn-danger">New Listing</button>
+    </form>
+</body>
